@@ -10,8 +10,11 @@ hunter={"rect":hunter_rect, "speed_x": 2, "speed_y":4, "touches": 0}
 victim_rect = pygame.Rect(330, 450, 40, 40)
 victim={"rect":victim_rect, "touches": 0}
 
+game_over = False
+
 def step():
-    move_hunter()
+    if not game_over:
+        move_hunter()
 
 def move_hunter():
     hunter["rect"].x+=hunter["speed_x"]
@@ -57,11 +60,15 @@ def move_hunter():
     check_touch()
 
 def move_victim(x, y):
+    if game_over:
+        return
+
     victim["rect"].centerx=x
     victim["rect"].centery = y
     check_touch()
 
 def check_touch():
+    global game_over
     center = victim['rect'].center
     if victim['rect'].colliderect(hunter['rect']):
         victim['touches']+=1
@@ -71,3 +78,6 @@ def check_touch():
         victim['rect'].width+=1
         victim['rect'].height += 1
         victim['rect'].center = center
+
+    if victim['rect'].width>=700:
+        game_over=True

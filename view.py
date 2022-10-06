@@ -11,6 +11,7 @@ font = pygame.font.SysFont("Arial", 15, True)
 
 def draw():
     screen.fill([0,0,0])
+
     pygame.draw.rect(screen, [122, 232,12], model.victim["rect"])
     t = font.render(str(model.victim["touches"]), True, [0, 0, 0])
     trect = t.get_rect()
@@ -24,5 +25,11 @@ def draw():
     screen.blit(t, trect)
 
     pygame.display.set_caption("Убеги, если сможешь! SpeedX="+str(model.hunter["speed_x"])+" SpeedY="+str(model.hunter["speed_y"]))
+
+    if model.game_over:
+        t = font.render("Game over!", True, [255, 0, 255])
+        trect = t.get_rect()
+        trect.center=[350, 350]
+        screen.blit(t, trect)
 
     pygame.display.flip()
